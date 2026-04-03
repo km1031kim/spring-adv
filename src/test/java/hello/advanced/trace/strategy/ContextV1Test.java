@@ -1,5 +1,9 @@
 package hello.advanced.trace.strategy;
 
+import hello.advanced.trace.strategy.code.strategy.ContextV1;
+import hello.advanced.trace.strategy.code.strategy.Strategy;
+import hello.advanced.trace.strategy.code.strategy.StrategyLogic1;
+import hello.advanced.trace.strategy.code.strategy.StrategyLogic2;
 import hello.advanced.trace.template.code.AbstractTemplate;
 import hello.advanced.trace.template.code.SubClassLogic1;
 import hello.advanced.trace.template.code.SubClassLogic2;
@@ -66,5 +70,32 @@ public class ContextV1Test {
         log.info("클래스 이름2={}", template2.getClass());
         template1.execute();
         template2.execute();
+    }
+
+    /**
+     * 전략 패턴 사용
+     */
+    @Test
+    void strategy1() {
+        Strategy strategy = new StrategyLogic1();
+        ContextV1 contextV1 = new ContextV1(strategy);
+        contextV1.execute();
+
+
+        Strategy strategy2 = new StrategyLogic2();
+        ContextV1 contextV2 = new ContextV1(strategy2);
+        contextV2.execute();
+    }
+
+    /**
+     * 전략 패턴 사용
+     */
+    @Test
+    void strategy2() {
+        ContextV1 c1 = new ContextV1(() -> log.info("비즈니스 로직1 실행"));
+        ContextV1 c2 = new ContextV1(() -> log.info("비즈니스 로직2 실행"));
+
+        c1.execute();
+        c2.execute();
     }
 }
